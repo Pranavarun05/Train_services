@@ -1,0 +1,30 @@
+syntax = "proto3";
+option go_package = "github.com/ankush144/grpc/invoicer";
+
+package train;
+
+message User {
+  string first_name = 1;
+  string last_name = 2;
+  string email = 3;
+}
+
+message Ticket {
+  string from = 1;
+  string to = 2;
+  User user = 3;
+  float price_paid = 4;
+  string seat_section = 5;
+}
+
+message SectionRequest {
+  string section = 1;
+}
+
+service TrainService {
+  rpc PurchaseTicket(Ticket) returns (Ticket);
+  rpc GetReceipt(User) returns (Ticket);
+  rpc GetUsersBySection(SectionRequest) returns (stream Ticket);
+  rpc RemoveUser(User) returns (Ticket);
+  rpc ModifyUserSeat(Ticket) returns (Ticket);
+}
